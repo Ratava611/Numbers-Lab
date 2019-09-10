@@ -15,8 +15,11 @@ public class primeFact {
     /**
      * Fields
      */
-    private static List<Integer> fact = new ArrayList<>();
-    public static List<Integer> getFact() { return fact;}
+    private static List<Integer> fact;
+
+    public static List<Integer> getFact() {
+        return fact;
+    }
 
     /**
      * Constructor
@@ -25,7 +28,7 @@ public class primeFact {
         Scanner in = new Scanner(System.in);
         int nth = in.nextInt();
         if (nth >= 0) {
-            calculateFact(nth, 2);
+            primeFact facts = new primeFact(nth);
             System.out.println(fact.toString());
         }
         else {
@@ -36,6 +39,7 @@ public class primeFact {
 
     public primeFact (int nth)
     {
+        fact = new ArrayList<>();
         calculateFact(nth, 2);
     }
 
@@ -48,6 +52,7 @@ public class primeFact {
             if (n % i == 0) {
                 calculateFact((n / i), i);
                 fact.add(i);
+                //TODO conditional for initial n being prime
             } else {
                 i++;
                 calculateFact(n, i);
