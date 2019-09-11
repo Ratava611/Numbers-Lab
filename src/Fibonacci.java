@@ -15,7 +15,7 @@ public class Fibonacci {
     /**
      * Fields
      */
-    private static List<Integer> fib = new ArrayList<>();
+    private static List<Integer> fib;
     public static List<Integer> getFib() { return fib;}
 
     /**
@@ -25,6 +25,7 @@ public class Fibonacci {
         Scanner in = new Scanner(System.in);
         int nth = in.nextInt();
         if (nth >= 0) {
+            fib = new ArrayList<>();
             getNth(nth);
             System.out.println(fib.toString());
         }
@@ -36,6 +37,7 @@ public class Fibonacci {
 
     public Fibonacci (int nth)
     {
+        fib = new ArrayList<>();
         getNth(nth);
     }
 
