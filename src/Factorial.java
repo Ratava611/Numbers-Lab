@@ -29,7 +29,7 @@ public class Factorial {
         if ((nth >= 0) && (nth <= 200)) {
             System.out.println(calculateFact(nth));
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("pp too big");
         }
 
     }
