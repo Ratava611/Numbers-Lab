@@ -1,3 +1,5 @@
+package mathProjects;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,15 +32,13 @@ public class primeFact {
         if (nth >= 0) {
             primeFact facts = new primeFact(nth);
             System.out.println(fact.toString());
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
 
     }
 
-    public primeFact (int nth)
-    {
+    public primeFact (int nth) {
         fact = new ArrayList<>();
         calculateFact(nth, 2);
     }

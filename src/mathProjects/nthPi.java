@@ -1,4 +1,5 @@
-import org.w3c.dom.ranges.RangeException;
+package mathProjects;
+
 import java.util.Scanner;
 
 /**

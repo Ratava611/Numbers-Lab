@@ -1,3 +1,5 @@
+package algorithms;
+
 import java.util.Scanner;
 
 /**
@@ -32,6 +34,7 @@ public class Collatz {
 
     /**
      * Methods
+     * #Note - these are probably better as loops but I need recursion practice
      */
     public static int getSteps(int n, int count) {
         int counter = count;
@@ -46,6 +49,4 @@ public class Collatz {
             }
         }
     }
-
-
 }

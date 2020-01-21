@@ -1,3 +1,5 @@
+package mathProjects;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +18,7 @@ public class Fibonacci {
      * Fields
      */
     private static List<Integer> fib;
+
     public static List<Integer> getFib() { return fib;}
 
     /**
@@ -28,15 +31,13 @@ public class Fibonacci {
             fib = new ArrayList<>();
             getNth(nth);
             System.out.println(fib.toString());
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
 
     }
 
-    public Fibonacci (int nth)
-    {
+    public Fibonacci (int nth) {
         fib = new ArrayList<>();
         getNth(nth);
     }
@@ -45,27 +46,19 @@ public class Fibonacci {
     /**
      * Methods
      */
-    private static int calculateFib(int i, int a, int b)
-    {
-        if (i == 0)
-        {
+    private static int calculateFib(int i, int a, int b) {
+        if (i == 0) {
             return a;
-        }
-        else if (i == 1)
-        {
+        } else if (i == 1) {
             return b;
-        }
-        else
-        {
+        } else {
             return calculateFib(i - 1, b, a + b);
         }
     }
 
 
-    private static void getNth(int n)
-    {
-        for (int i = 0; i <= n; i++)
-        {
+    private static void getNth(int n) {
+        for (int i = 0; i <= n; i++) {
             fib.add(calculateFib(i, 0, 1));
         }
     }

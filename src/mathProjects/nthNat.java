@@ -1,3 +1,5 @@
+package mathProjects;
+
 import java.util.Scanner;
 
 /**
@@ -14,6 +16,7 @@ public class nthNat {
      * Fields
      */
     private static double nthE = 0;
+
     public static double getNthE() { return nthE;}
 
     /**
@@ -24,20 +27,15 @@ public class nthNat {
         int nth = in.nextInt();
         if (nth >= 0) {
             System.out.println(getNth(nth, calculateE()));
-        }
-        else {
+        } else {
             throw new IllegalArgumentException();
         }
     }
 
-    public nthNat(int nth, boolean trueE)
-    {
-        if (trueE)
-        {
+    public nthNat(int nth, boolean trueE) {
+        if (trueE) {
             nthE = getNth(nth, Math.E);
-        }
-        else
-        {
+        } else {
             nthE = getNth(nth, calculateE());
         }
     }
@@ -45,14 +43,12 @@ public class nthNat {
     /**
      * Methods
      */
-    public static double calculateE()
-    {
+    public static double calculateE() {
         double e = Math.exp(1);
         return e;
     }
 
-    public static double getNth(int n, double e)
-    {
+    public static double getNth(int n, double e) {
         String eString = String.format("%." + n +"f", e);
         return Double.parseDouble(eString);
     }

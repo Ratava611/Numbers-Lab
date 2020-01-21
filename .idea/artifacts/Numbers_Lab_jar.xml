@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Numbers Lab:jar">
+    <output-path>$USER_HOME$/Desktop/</output-path>
+    <root id="archive" name="Numbers Lab.jar">
+      <element id="module-output" name="Numbers Lab" />
+    </root>
+  </artifact>
+</component>

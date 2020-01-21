@@ -1,3 +1,5 @@
+package mathProjects;
+
 import java.util.Scanner;
 
 /**
@@ -37,7 +39,7 @@ public class binaryDecimal {
         int in = n;
         for (int i = 0; i < Integer.toString(n).length(); i++) {
             if (((in % 10) != 0) && ((in % 10) != 1)) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("that's not binary u fool");
             } else {
                 x += ((in % 10) * Math.pow(2, i));
                 in /= 10;
