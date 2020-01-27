@@ -38,7 +38,7 @@ public class BubbleSort {
      */
 
     public static int[] sortInt(String args) {
-        String inString = args.replaceAll("[^0-9]", " ");
+        String inString = args.replaceAll("[^0-9-]", " ");
         Scanner presort = new Scanner(inString);
         List input = new ArrayList();
         while (presort.hasNextInt()) {
