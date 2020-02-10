@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Dillon Domnick. @since 1/27/2020
@@ -23,16 +21,15 @@ public class displayWindow extends JFrame implements ActionListener {
      * Fields
      */
     private JFrame frame;
-    private JTextField field;
+    private JTextField textField;
     private JButton quitButton;
     private JPanel panel;
-    private JLabel label;
-    private JLabel label2;
-    private JLabel label3;
-    private static displayText text;
-    private static List<Character> chars = new ArrayList<>();
-
-    private static int index;
+    private JLabel displayChar;
+    private JLabel displayPercent;
+    private JLabel displayAnswer;
+    private Timer timer;
+    private static List<Character> charList;
+    private static String[] stringArray;
     private static int removed = 0;
     private static int correct = 0;
 
@@ -40,12 +37,10 @@ public class displayWindow extends JFrame implements ActionListener {
      * Constructor
      */
     public static void main(String[] args) {
-        text = new displayText();
-        chars = text.getAbc();
+        displayText display = new displayText();
+        charList = display.getAbc();
+        stringArray = display.getNato();
         new displayWindow().init();
-    }
-
-    public displayWindow() {
     }
 
     /**
@@ -54,34 +49,26 @@ public class displayWindow extends JFrame implements ActionListener {
     public void init() {
         frame = new JFrame("Nato Game");
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        //panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         quitButton.setText("Quit");
         quitButton.addActionListener(this);
-        //panel.add(quitButton);
 
-        field.setColumns(20);
-        field.addActionListener(this);
-        //panel.add(field);
+        textField.setColumns(20);
+        textField.addActionListener(this);
 
         this.setLabelText();
-        label.setVerticalAlignment(JLabel.CENTER);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(new Font("Ariel", Font.PLAIN, 32));
-        //label.setPreferredSize(new Dimension(250, 100));
-        //panel.add(label);
+        displayChar.setVerticalAlignment(JLabel.CENTER);
+        displayChar.setHorizontalAlignment(JLabel.CENTER);
+        displayChar.setFont(new Font("Ariel", Font.PLAIN, 32));
 
-        label2.setText(" ");
-        label2.setHorizontalAlignment(JLabel.CENTER);
-        label2.setFont(new Font("Ariel", Font.PLAIN, 16));
-        //panel.add(label2);
+        displayPercent.setText("Percent correct: ");
+        displayPercent.setHorizontalAlignment(JLabel.CENTER);
+        displayPercent.setFont(new Font("Ariel", Font.PLAIN, 12));
 
-        label3.setText(" ");
-        label3.setHorizontalAlignment(JLabel.CENTER);
-        label3.setFont(new Font("Ariel", Font.PLAIN, 16));
-        label3.setForeground(Color.RED);
-        //panel.add(label3);
+        displayAnswer.setText(" ");
+        displayAnswer.setHorizontalAlignment(JLabel.CENTER);
+        displayAnswer.setFont(new Font("Ariel", Font.PLAIN, 12));
+        displayAnswer.setForeground(Color.RED);
 
         frame.add(panel);
         frame.pack();
@@ -89,45 +76,67 @@ public class displayWindow extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    private void setLabelText() {
+        if (charList.size() > 0) {
+            displayChar.setText(charList.remove(0).toString());
+            displayChar.setForeground(Color.BLACK);
+            removed++;
+
+        } else {
+            displayChar.setFont(new Font("Ariel", Font.PLAIN, 16));
+            displayChar.setText("You scored " + correct + "/" + removed);
+            displayAnswer.setText("");
+        }
+    }
+
+    ActionListener waitTest = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            timer.stop();
+            displayAnswer.setText("You took too long!");
+            frame.repaint();
+            correct--;
+        }
+    };
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(quitButton)) {
             System.exit(0);
-        } else if (e.getSource().equals(field)) {
-            if (chars.size() == 0) {
+        } else if (e.getSource().equals(textField)) {
+            if (charList.size() == 25) {
+                timer = new Timer(5 * 1000, waitTest);
+            } else {
+                timer.stop();
+            }
+            if (charList.size() == 0) {
                 setLabelText();
                 return;
             }
+
             String target = null;
-            for (int i = 0; i < text.getNato().length; i++) {
-                if ((text.getNato())[i].startsWith(label.getText().toLowerCase())) {
-                    target = text.getNato()[i];
+            for (int i = 0; i < stringArray.length; i++) {
+                if ((stringArray)[i].startsWith(displayChar.getText().toLowerCase())) {
+                    target = stringArray[i];
                 }
             }
-            if (field.getText().toLowerCase().equals(target.toLowerCase())) {
+
+            if (StringMatch.isCorrect(textField.getText().toLowerCase(), target, 10)) {
                 correct++;
-                label3.setText("");
+                displayAnswer.setText("");
             } else {
-                label3.setText(target);
+                displayAnswer.setText(target);
             }
+
             float percent = (float) correct / (float) removed;
-            label2.setText(String.format("%.2f", percent * 100.0f) + " percent");
+            displayPercent.setText("Percent correct: " + String.format("%.2f", percent * 100.0f) + "%");
             this.setLabelText();
-            field.setText("");
+            textField.setText("");
+            timer.setInitialDelay(5 * 1000);
+            timer.start();
             frame.repaint();
+
         }
     }
 
-    public void setLabelText() {
-        if (chars.size() > 0) {
-            Random rng = new Random();
-            index = rng.nextInt(chars.size());
-            label.setText(chars.remove(index).toString());
-            label.setForeground(Color.BLACK);
-            removed++;
-        } else {
-            label.setFont(new Font("Ariel", Font.PLAIN, 16));
-            label.setText("You scored " + correct + "/" + removed);
-        }
-    }
 }
